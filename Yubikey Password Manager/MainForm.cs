@@ -14,6 +14,8 @@ using System.Runtime.InteropServices;
 using System.Security.Cryptography;
 using System.Windows.Forms;
 using System.Text;
+using System.ComponentModel;
+using System.Management;
 
 namespace Yubikey_Password_Manager
 {
@@ -22,7 +24,11 @@ namespace Yubikey_Password_Manager
 	/// </summary>
 	public partial class MainForm : Form
 	{
+		public delegate void EnableYubikey();
+		public delegate void DisableYubikey();
+		
 		private FileInfo dataFile;
+		private BackgroundWorker bw;
 		
 		public MainForm()
 		{
@@ -69,6 +75,10 @@ namespace Yubikey_Password_Manager
 				dataFile.Directory.Create();
 			}
 			
+			
+			bw = new BackgroundWorker();
+			bw.DoWork += backgroundWorker1_DoWork;
+			bw.RunWorkerAsync();
 			//
 			// TODO: Add constructor code after the InitializeComponent() call.
 			//
@@ -176,7 +186,51 @@ namespace Yubikey_Password_Manager
 			fs.Write(procData, 0, procData.Length);
 			fs.Close();
 		}
+		
+		public void EnableYubikeyMethod()
+		{
+			gbYubikey.Enabled = true;
+		}
+		
+		public void DisableYubikeyMethod()
+		{
+			gbYubikey.Enabled = false;
+		}
 			
+		private void DeviceInsertedEvent(object sender, EventArrivedEventArgs e)
+		{
+			
+		    ManagementBaseObject instance = (ManagementBaseObject)e.NewEvent["TargetInstance"];
+		    if(instance["DeviceID"].ToString().Contains("VID_1050")){
+		    	gbYubikey.Invoke(new EnableYubikey(EnableYubikeyMethod));
+		    }
+		    
+		}
+	
+		private void DeviceRemovedEvent(object sender, EventArrivedEventArgs e)
+		{
+		    ManagementBaseObject instance = (ManagementBaseObject)e.NewEvent["TargetInstance"];
+		    if(instance["DeviceID"].ToString().Contains("VID_1050")){
+		    	gbYubikey.Invoke(new DisableYubikey(DisableYubikeyMethod));
+		    }
+		}            
+		
+		private void backgroundWorker1_DoWork(object sender, DoWorkEventArgs e)
+		{
+		    WqlEventQuery insertQuery = new WqlEventQuery("SELECT * FROM __InstanceCreationEvent WITHIN 2 WHERE TargetInstance ISA 'Win32_USBHub'");
+		
+		    ManagementEventWatcher insertWatcher = new ManagementEventWatcher(insertQuery);
+		    insertWatcher.EventArrived += new EventArrivedEventHandler(DeviceInsertedEvent);
+		    insertWatcher.Start();
+		
+		    WqlEventQuery removeQuery = new WqlEventQuery("SELECT * FROM __InstanceDeletionEvent WITHIN 2 WHERE TargetInstance ISA 'Win32_USBHub'");
+		    ManagementEventWatcher removeWatcher = new ManagementEventWatcher(removeQuery);
+		    removeWatcher.EventArrived += new EventArrivedEventHandler(DeviceRemovedEvent);
+		    removeWatcher.Start();
+		
+		    // Do something while waiting for events
+		    System.Threading.Thread.Sleep(200000000);
+		}
 	}
 	
 	class Credential {

@@ -22,7 +22,7 @@ namespace Yubikey_Password_Manager
 		private System.Windows.Forms.GroupBox groupBox1;
 		private System.Windows.Forms.Button btnPassword;
 		private System.Windows.Forms.Button btnUsername;
-		private System.Windows.Forms.GroupBox groupBox2;
+		private System.Windows.Forms.GroupBox gbYubikey;
 		private System.Windows.Forms.CheckBox cbAppendCr;
 		private System.Windows.Forms.Button btnWriteBoth;
 		private System.Windows.Forms.Button btnWritePassword;
@@ -61,7 +61,7 @@ namespace Yubikey_Password_Manager
 			this.groupBox1 = new System.Windows.Forms.GroupBox();
 			this.btnPassword = new System.Windows.Forms.Button();
 			this.btnUsername = new System.Windows.Forms.Button();
-			this.groupBox2 = new System.Windows.Forms.GroupBox();
+			this.gbYubikey = new System.Windows.Forms.GroupBox();
 			this.cbAppendCr = new System.Windows.Forms.CheckBox();
 			this.btnWriteBoth = new System.Windows.Forms.Button();
 			this.btnWritePassword = new System.Windows.Forms.Button();
@@ -71,7 +71,7 @@ namespace Yubikey_Password_Manager
 			this.tbCredentialName = new System.Windows.Forms.TextBox();
 			this.label3 = new System.Windows.Forms.Label();
 			this.groupBox1.SuspendLayout();
-			this.groupBox2.SuspendLayout();
+			this.gbYubikey.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// lstAccounts
@@ -145,18 +145,18 @@ namespace Yubikey_Password_Manager
 			this.btnUsername.UseVisualStyleBackColor = true;
 			this.btnUsername.Click += new System.EventHandler(this.BtnUsernameClick);
 			// 
-			// groupBox2
+			// gbYubikey
 			// 
-			this.groupBox2.Controls.Add(this.cbAppendCr);
-			this.groupBox2.Controls.Add(this.btnWriteBoth);
-			this.groupBox2.Controls.Add(this.btnWritePassword);
-			this.groupBox2.Controls.Add(this.btnWriteUsername);
-			this.groupBox2.Location = new System.Drawing.Point(12, 296);
-			this.groupBox2.Name = "groupBox2";
-			this.groupBox2.Size = new System.Drawing.Size(260, 110);
-			this.groupBox2.TabIndex = 6;
-			this.groupBox2.TabStop = false;
-			this.groupBox2.Text = "Yubikey";
+			this.gbYubikey.Controls.Add(this.cbAppendCr);
+			this.gbYubikey.Controls.Add(this.btnWriteBoth);
+			this.gbYubikey.Controls.Add(this.btnWritePassword);
+			this.gbYubikey.Controls.Add(this.btnWriteUsername);
+			this.gbYubikey.Location = new System.Drawing.Point(12, 296);
+			this.gbYubikey.Name = "gbYubikey";
+			this.gbYubikey.Size = new System.Drawing.Size(260, 110);
+			this.gbYubikey.TabIndex = 6;
+			this.gbYubikey.TabStop = false;
+			this.gbYubikey.Text = "Yubikey";
 			// 
 			// cbAppendCr
 			// 
@@ -243,7 +243,7 @@ namespace Yubikey_Password_Manager
 			this.Controls.Add(this.tbCredentialName);
 			this.Controls.Add(this.btnRemove);
 			this.Controls.Add(this.btnAdd);
-			this.Controls.Add(this.groupBox2);
+			this.Controls.Add(this.gbYubikey);
 			this.Controls.Add(this.groupBox1);
 			this.Controls.Add(this.label2);
 			this.Controls.Add(this.label1);
@@ -255,7 +255,7 @@ namespace Yubikey_Password_Manager
 			this.Text = "Yubikey Password Manager";
 			this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.MainFormFormClosing);
 			this.groupBox1.ResumeLayout(false);
-			this.groupBox2.ResumeLayout(false);
+			this.gbYubikey.ResumeLayout(false);
 			this.ResumeLayout(false);
 			this.PerformLayout();
 
