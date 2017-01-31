@@ -202,7 +202,7 @@ namespace Yubikey_Password_Manager
 			
 		    ManagementBaseObject instance = (ManagementBaseObject)e.NewEvent["TargetInstance"];
 		    if(instance["DeviceID"].ToString().Contains("VID_1050")){
-		    	gbYubikey.Invoke(new EnableYubikey(EnableYubikeyMethod));
+		    	gbYubikey.BeginInvoke(new EnableYubikey(EnableYubikeyMethod));
 		    }
 		    
 		}
@@ -211,7 +211,7 @@ namespace Yubikey_Password_Manager
 		{
 		    ManagementBaseObject instance = (ManagementBaseObject)e.NewEvent["TargetInstance"];
 		    if(instance["DeviceID"].ToString().Contains("VID_1050")){
-		    	gbYubikey.Invoke(new DisableYubikey(DisableYubikeyMethod));
+		    	gbYubikey.BeginInvoke(new DisableYubikey(DisableYubikeyMethod));
 		    }
 		}            
 		
